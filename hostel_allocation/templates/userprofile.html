@@ -1,0 +1,34 @@
+<!-- userprofile.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+
+            {% if user.student.profile_pic %}
+                <img src="{{ user.student.profile_pic.url }}" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
+            {% endif %}
+            <h1 class="card-title">{{ user.username }}</h1>
+            {% if user == request.user %}
+                <a href="{% url 'edit_student' %}" class="btn btn-primary">Edit Profile</a>
+                <hr>
+                {% if user.student.matric_number %}
+                    <p class="card-text"><strong>Matric Number:</strong> {{ user.student.matric_number }}</p>
+                {% endif %}
+            {% endif %}
+
+            <h5 class="mt-4">Additional Details:</h5>
+            <ul class="list-unstyled">
+                <li><strong>Gender:</strong> {{ user.student.gender }}</li>
+                <li><strong>College:</strong> {{ user.student.college }}</li>
+                <li><strong>Department:</strong> {{ user.student.department }}</li>
+                <li><strong>Hostel:</strong> {{ user.student.room_for_student }}</li>
+                <!-- Add other fields as needed -->
+            </ul>
+        </div>
+    </div> 
+    
+
+  </div>
+{% endblock %}

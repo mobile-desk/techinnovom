@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    LOG
+{% endblock title %}
+
+{% block content %}
+    <br>
+    <!-- Download button -->
+    <a href="{% url 'download_activity_log' %}" class="btn btn-primary">Download Log as XML</a>
+    <br>
+    
+    <h2>User Activity Log</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Activity</th>
+            <th>Timestamp</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for log in activity_log %}
+            <tr>
+            <td>{{ log.activity }}</td>
+            <td>{{ log.timestamp }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+            <td colspan="2">No activity log found.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}

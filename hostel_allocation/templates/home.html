@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+    <div class="row" style="margin-top: 5%;">
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <div class="card">
+                {% if user.is_authenticated %}
+                    {% if has_profile %}
+                        {% if profile.hostel %}
+                            <div class="card-body">
+                                <h5 class="card-title"> HOSTEL NAME: {{profile.hostel}} </h5>
+                                <h6> ROOM NO: {{profile.room_for_student.room_no}}</h6>
+
+                            </div>
+                            <a href="{% url 'hostel_community' %}" class="btn btn-outline-secondary">View {{ profile.hostel }} Community</a>
+                        {% else %}
+                            <div class="card-body">
+                                <h5 class="card-title">No Hostel</h5>
+                                <p class="card-text">
+                                    To get allocated a hostel, simply click on the "Get Hostel" button below.<br>
+                                    Our system will match your preferences and assign you a suitable hostel.<br>
+                                    Start your hostel journey now!
+                                </p>
+                                <form method="POST" action="{% url 'allocate_hostel' %}">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Get Hostel" class="btn btn-primary">
+                                </form>
+
+                            </div>
+                        {% endif %}
+                        <a href="{% url 'community' %}" class="btn btn-outline-secondary">View {{ profile.college }} Community</a>
+
+                    {% else %}
+                        <div class="card-body">
+                            <h5 class="card-title">SETUP YOUR PROFILE</h5>
+                            <p class="card-text">
+                                Before you can start using the platform, we kindly ask you to set up your profile.<br>
+                                By providing the necessary information, we can ensure that you are allocated to a suitable hostel based on your preferences.<br>
+                                To set up your profile, please click on the "Create Profile" button below.<br>
+                                You will be guided through a simple process where you can specify your gender, room preferences, and any other relevant details.<br>
+                                Having an accurate profile will help us in allocating you to the most suitable accommodation.<br>
+                                Thank you for your cooperation. We look forward to providing you with a comfortable and enjoyable hostel experience!
+                            </p>
+                            <a href="create-profile" class="btn btn-primary">Create Profile</a>
+                        </div>
+                    {% endif %}
+                <a href="{% url 'activity_log' %}" class="btn btn-warning">View Log</a>
+                {% else %}
+                    <div class="card-body">
+                        <h5 class="card-title">LOGIN TO ACCESS</h5>
+                        <p class="card-text">
+                            To access and utilize the features of our platform,<br>
+                            please log in with your credentials.<br>
+                            If you don't have an account yet, you can easily create one to get started.
+                        </p>
+                    </div>
+                {% endif %}
+
+
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Complaint Form</h5>
+                    {% if has_profile %}
+                        <p class="card-text">If any of your utilities are faulty, make a complaint below.</p>
+                        <a href="{% url 'create_complaint' %}" class="btn btn-danger">Make A Complaint</a>
+                    {% else %}
+                        <p class="card-text">You have not been assigned a hostel yet</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Utilities and roommates-->
+    {% if user.is_authenticated %}
+        {% if has_profile %}
+            <div class="row" style="margin-top: 5%;">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div>
+                        {% for utility in utilities %}
+                            <div class="card" style="width: 18rem;">
+                                <div class="card-header">
+                                    <b>UTILITIES</b>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Fan: {% if utility.fan %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Bed: {% if utility.bed %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Mattress: {% if utility.mattress %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Pillows: {% if utility.pillows %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Wardrobe: {% if utility.wardrobe %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Book Rack: {% if utility.book_rack %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Tables: {% if utility.tables %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Chairs: {% if utility.chairs %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Wall Socket: {% if utility.wall_socket %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Tiles: {% if utility.tiles %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Paint: {% if utility.paint %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Window: {% if utility.window %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Waste Bin: {% if utility.waste_bin %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Door: {% if utility.door %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Door Lock: {% if utility.door_lock %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Bulb: {% if utility.bulb %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Wiring: {% if utility.wiring %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Shower: {% if utility.shower %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Towel Holder: {% if utility.towel_holder %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Tap: {% if utility.tap %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Water Closet: {% if utility.water_closet %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">TV: {% if utility.TV %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                    <li class="list-group-item">Decoder: {% if utility.decoder %}&#10004;{% else %}&#10060;{% endif %}</li>
+                                </ul>
+                            </div>
+                        {% empty %}
+                            <p>No utilities found.</p>
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+                {% if profile.hostel %}
+                <div class="col-sm-6">
+
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                            <b>ROOMMATES</b>
+                        </div>
+
+                        <ul class="list-group list-group-flush">
+                            {% for roommate in roommates %}
+                                <li class="list-group-item"><a href="{% url 'userprofile' user_id=roommate.user.id %}">{{ roommate.user.first_name }} {{ roommate.user.last_name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+
+                </div>
+                {% endif %}
+
+            </div>
+        {% endif %}
+    {% endif %}
+
+
+
+
+
+
+{% endblock content %}

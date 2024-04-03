@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Complaint Form
+{% endblock title %}
+
+{% block content %}
+
+    
+    {% load crispy_forms_tags %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+
+    <h1> Make a Complaint </h1>
+    <div class="form-group" style="width: 100%; height: 100%;">
+
+        {{ form.media }}  {# Adds widget's JS/CSS files from CDN #}
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+         
+          {{ form.as_p }}
+          <br><br>
+          <button class="btn btn-warning" type="submit">SUBMIT</button>
+        </form>
+
+        <br><br><br>
+    </div>
+{% endblock content %}

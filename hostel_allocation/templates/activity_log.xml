@@ -1,0 +1,10 @@
+<!-- activity_log.xml -->
+<activityLog>
+  {% for log in logs %}
+    <log>
+      <username>{{ log.user.username }}</username>
+      <activity>{{ log.activity }}</activity>
+      <timestamp>{{ log.timestamp }}</timestamp>
+    </log>
+  {% endfor %}
+</activityLog>

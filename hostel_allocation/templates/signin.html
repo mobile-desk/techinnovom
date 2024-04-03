@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Sign In             
+{% endblock title %}
+
+{% block content %}
+
+
+    <div class="mb-3">
+        <h1>Log In</h1>
+            
+        <form action="" method="POST">
+            {% csrf_token %}
+
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter a Username"  Required>
+            <br>
+
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password"  Required>
+            <br>
+
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="submit" class="btn btn-primary btn-lg" style="border-top-right-radius: 5px; border-bottom-right-radius: 5px;">Sign In</button>
+                <a href="signup"> <button type="button" class="btn btn-primary btn-lg btn-secondary" style="margin-left: 20px; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">SignUp</button> </a>
+            </div>
+
+            <!--
+            <div id="nn">
+                <a href="signup">
+                    <h3> SignUp </h3>
+                </a>
+                <button class="btn btn-primary" type="submit" id="btn">Sign In</button>
+            </div> 
+            -->   
+        </form>
+    </div>    
+{% endblock content %}

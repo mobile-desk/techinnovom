@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Post a Message</h1>
+
+  <form method="post" action="{% url 'post_message' %}">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="message">Message</label>
+      <textarea class="form-control" id="message" name="message" rows="4"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Post Message</button>
+  </form>
+{% endblock %}

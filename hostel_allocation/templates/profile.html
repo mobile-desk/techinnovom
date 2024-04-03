@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Allocation              
+{% endblock title %}
+
+
+{% block content %}
+
+        <h1>Hostel Allocation Result</h1>
+    {% if allocated_hostel and allocated_room %}
+        <h2>Allocation Result:</h2>
+        <p>Hostel: {{ allocated_hostel.name }}</p>
+        <p>Room Number: {{ allocated_room.number }}</p>
+    {% else %}
+        <p>No hostel allocation available at the moment.</p>
+    {% endif %}
+
+
+{% endblock content %}
+
