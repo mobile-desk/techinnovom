@@ -1,0 +1,1110 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    {{ business.name }}
+{% endblock %}
+
+{% if business.subscription_plan == 'Free Plan' %}
+    <link rel="stylesheet" type="text/css" href="{% static 'free.css' %}">
+{% elif business.subscription_plan == 'Starter Plan' %}
+    <link rel="stylesheet" type="text/css" href="{% static 'starter.css' %}">
+{% elif business.subscription_plan == 'Standard Plan' %}
+    <link rel="stylesheet" type="text/css" href="{% static 'standard.css' %}">
+{% elif business.subscription_plan == 'Pro Plan' %}
+    <link rel="stylesheet" type="text/css" href="{% static 'pro.css' %}">
+{% else %}
+{% endif %}
+
+{% block styles %}
+    <style>
+        .container {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        }
+        .page {
+        padding: 10px;
+
+        margin-bottom: 10px;
+        }
+        .hidden {
+        display: none;
+        }
+
+        .banner {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .bannetkkr {
+            max-width: 100%;
+            width: 100%;
+            height: 200px;
+            display: block;
+            margin: 0 auto;
+            object-fit: cover;
+        }
+
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .bannekkr {
+            max-width: 100%;
+            width: 100%;
+            height: 200px;
+            display: block;
+            margin: 0 auto;
+
+        }
+
+        /* starter */
+        /* styles.css */
+
+        /* Logo and business info */
+        .starterlogo-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .startercircular-logo {
+            /* Add styles for circular logo */
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+
+        }
+
+
+        .startercircular-logo img{
+            /* Add styles for circular logo */
+            width: 100px;
+            height: auto;
+            display: block;
+
+        }
+
+
+        .starterbusiness-info {
+            margin-left: 20px; /* Adjust spacing */
+        }
+
+        .starterbusiness-info h2 {
+            font-size: 24px; /* Adjust font size */
+            margin-bottom: 10px;
+        }
+
+        .startercontact-info {
+            display: flex;
+        }
+
+        .startercontact-item {
+            margin-right: 20px; /* Adjust spacing between contact items */
+        }
+
+        .startercontact-item i {
+            margin-right: 5px; /* Adjust spacing between icon and text */
+        }
+
+        /* Product grid */
+        .starterproducts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust min/max width as needed */
+            gap: 20px; /* Adjust gap between items */
+        }
+
+
+
+        /* standard */
+        /* styles.css */
+
+        /* Business name centered */
+        .standardbusiness-name {
+            text-align: center;
+        }
+
+        /* Contact info centered and side by side */
+        .standardcontact-info {
+            display: flex;
+            justify-content: center;
+        }
+
+        .standardcontact-item {
+            margin: 0 10px; /* Adjust spacing between contact items */
+            display: flex;
+            align-items: center;
+        }
+
+        .standardcontact-item i {
+            margin-right: 5px; /* Adjust spacing between icon and text */
+        }
+
+        /* Images in a grid */
+        .images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust min/max width as needed */
+            gap: 20px; /* Adjust gap between items */
+        }
+
+        /* Make images responsive */
+        .images img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Description */
+        .standarddescription {
+            /* Add styles for description */
+            text-align: center;
+        }
+
+
+
+        /* menu */
+        .standardlogo-business {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px; /* Added margin for spacing */
+        }
+
+        .standardcircular-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .standardcircular-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .standardbusiness-info {
+            margin-left: 20px; /* Adjust spacing */
+        }
+
+        .standardbusiness-info h1 {
+            font-size: 24px; /* Adjust font size */
+            margin-bottom: 10px;
+        }
+
+        .standardmenu-contact-info {
+            display: flex;
+        }
+
+
+        .standardmenu-contact-item {
+            margin-right: 20px; /* Adjust spacing between contact items */
+        }
+
+        .standardmenu-contact-item i {
+            margin-right: 5px; /* Adjust spacing between icon and text */
+        }
+
+
+
+
+
+        .stanimages {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .ssgrid-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+
+
+        /* pro */
+        .procontact-info {
+            display: flex;
+            justify-content: center; /* Center items horizontally */
+            flex-wrap: wrap; /* Allow items to wrap to the next line */
+        }
+
+        .procontact-item {
+            margin: 0 10px; /* Add spacing between items */
+        }
+
+        .proabout {
+            border: 1px solid #ccc; /* Add border */
+            border-radius: 5px;
+            padding: 20px; /* Add padding */
+            margin-top: 20px; /* Add margin to separate from other sections */
+        }
+
+
+        .bbbtn-group {
+            display: flex;
+            justify-content: center; /* Center buttons horizontally */
+        }
+
+        .sbtn {
+            width: 50%; /* Set width to fill 50% of the screen */
+            box-sizing: border-box; /* Include padding and border in the width */
+        }
+
+
+        .pbtn {
+            width: 25%; /* Set width to fill 50% of the screen */
+            box-sizing: border-box; /* Include padding and border in the width */
+        }
+
+
+
+
+        .page-container {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 200px; /* Set the height of the container to full viewport height */
+        }
+
+        .image-container {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex; /* Use flexbox */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            border: 2px solid black; /* Add border */
+
+        }
+
+        .image-container img {
+            width: 100%; /* Fill the width of the container */
+            height: 100%; /* Fill the height of the container */
+            object-fit: cover;
+
+        }
+
+
+        marquee img {
+            width: 200px; /* Set your desired width */
+            height: auto; /* Automatically adjust height to maintain aspect ratio */
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        @media only screen and (max-width: 768px) {
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .bannekkr .bannetkkr {
+
+
+                max-width: 100%;
+                width: 100%;
+                height: 120px;
+                display: block;
+                margin: 0 auto;
+
+        }
+            }
+
+            /* starter */
+            .starterlogo-info {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .starterbusiness-info {
+                margin-left: 0; /* Reset margin */
+                margin-top: 10px; /* Adjust spacing */
+                text-align: center; /* Center align text */
+            }
+
+            .starterbusiness-info h2 {
+                font-size: 20px; /* Adjust font size */
+                margin-bottom: 5px; /* Adjust margin */
+            }
+
+            .startercircular-logo {
+                width: 80px; /* Adjust width */
+                height: 80px; /* Adjust height */
+            }
+
+            .startercircular-logo img {
+                width: 80px; /* Adjust width */
+                height: auto; /* Maintain aspect ratio */
+            }
+
+            .startercontact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .startercontact-item {
+                margin: 5px 0; /* Adjust spacing */
+            }
+
+            .startercontact-item i {
+                margin-right: 0; /* Reset margin */
+            }
+
+            /* Product grid */
+            .starterproducts {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjust min/max width */
+                gap: 10px; /* Adjust gap between items */
+            }
+
+            .procontact-info {
+                justify-content: space-between; /* Space items evenly */
+            }
+
+            .sbtn {
+                width: 100%; /* Set width to fill 50% of the screen */
+
+            }
+
+
+            .pbtn {
+                width: 100%; /* Set width to fill 50% of the screen */
+
+            }
+
+        }
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+<div>
+    <!-- FREE -->
+    {% if business.subscription_plan == 'Free Plan' %}
+        <div class="container">
+
+            <div id="home" class="page">
+                <header>
+                    {% if business.industry == 'Technology' %}
+                        <img class="banner" src="{% static 'banner/technology.png' %}" alt="banner">
+
+                    {% elif business.industry == 'Finance' %}
+                        <img class="banner" src="{% static 'banner/finance.png' %}" alt="banner">
+
+                    {% elif business.industry == 'Healthcare' %}
+                        <img class="banner" src="{% static 'banner/healthcare.png' %}" alt="banner">
+
+                    {% elif business.industry == 'Hospitality' %}
+                        <img class="banner" src="{% static 'banner/hospitality.png' %}" alt="banner">
+
+                    {% elif business.industry == 'Education' %}
+                        <img class="banner" src="{% static 'banner/education.png' %}" alt="banner">
+
+                    {% elif business.industry == 'Manufacturing' %}
+                        <img class="banner" src="{% static 'banner/manufacturing.png' %}" alt="banner">
+
+                    {% elif business.industry == 'Marketing' %}
+                        <img class="banner" src="{% static 'banner/marketing.png' %}" alt="banner">
+
+                    {% elif business.industry == 'Retail' %}
+                        <img class="banner" src="{% static 'banner/retail.png' %}" alt="banner">
+
+                    {% elif business.industry == 'Energy' %}
+                        <img class="banner" src="{% static 'banner/energy.png' %}" alt="banner">
+
+                    {% elif business.industry == 'Consulting' %}
+                        <img class="banner" src="{% static 'banner/consulting.png' %}" alt="banner">
+
+                    {% elif business.industry == 'Food' %}
+                        <img class="banner" src="{% static 'banner/food.png' %}" alt="banner">
+
+                    {% endif %}
+                </header><br>
+
+                <marquee direction="left" scrollamount="5" behavior="scroll">
+                    {% for upload in user_uploads %}
+                        <a href="{{ upload.link }}" target="_blank">
+                            <img src="{{ upload.img.url }}" alt="Image">
+                        </a>
+                    {% endfor %}
+                </marquee>
+
+                <section>
+                    <div class="centered-text">
+                        <h1 style="text-align: center;">{{ user_business.buisness_name }}</h1>
+                    </div>
+                </section>
+
+                <section style="display: flex; justify-content: center; align-items: center;">
+                    <div class="contact-info">
+                        {% if user_business.phone %}
+                        <div class="contact-item">
+
+                            <i class="fa-solid fa-phone"></i>
+                            <span>{{ user_business.phone }}</span>
+
+                        </div>
+                        {% endif %}
+
+                        {% if user_business.email %}
+                        <div class="contact-item">
+
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>{{ user_business.email }}</span>
+
+                        </div>
+                        {% endif %}
+
+                        {% if user_business.address %}
+                        <div class="contact-item">
+
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <span>{{ user_business.address }}</span>
+
+                        </div>
+                        {% endif %}
+                    </div>
+                </section><br>
+.               <a href="https://truehost.com.ng/cloud/aff.php?aff=1851"><img class="bannekkr" src="{% static 'ads/truehost.jpg' %}" alt="banner"></a>
+                <section>
+                    <div class="products">
+                        {% for product_key, product in user_products.items %}
+                        <div class="product-card">
+                            <p>Name: {{ product.name }}</p>
+                            <p>Price: {{ product.price }}</p>
+                            <p>Description: {{ product.description }}</p>
+                            <!-- Add more product details as needed -->
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                <a href="https://clients.domainking.ng/aff.php?aff=5123"><img class="bannekkr" src="{% static 'ads/domainking.png' %}" alt="banner"></a>
+            </div>
+        </div>
+
+        <!--<button onclick="toggleDiv('home')">Home</button>-->
+
+
+    <!--STARTER -->
+    {% elif business.subscription_plan == 'Starter Plan' %}
+        <div class="container">
+
+
+            <div id="home" class="page">
+                <header>
+                    {% if user_business.banner_url %}
+                        <img class="bannetkkr" src="{{ user_business.banner_url }}" alt="banner">
+
+                    {% else %}
+
+                        {% if business.industry == 'Technology' %}
+                            <img class="banner" src="{% static 'banner/technology.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Finance' %}
+                            <img class="banner" src="{% static 'banner/finance.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Healthcare' %}
+                            <img class="banner" src="{% static 'banner/healthcare.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Hospitality' %}
+                            <img class="banner" src="{% static 'banner/hospitality.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Education' %}
+                            <img class="banner" src="{% static 'banner/education.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Manufacturing' %}
+                            <img class="banner" src="{% static 'banner/manufacturing.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Marketing' %}
+                            <img class="banner" src="{% static 'banner/marketing.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Retail' %}
+                            <img class="banner" src="{% static 'banner/retail.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Energy' %}
+                            <img class="banner" src="{% static 'banner/energy.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Consulting' %}
+                            <img class="banner" src="{% static 'banner/consulting.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Food' %}
+                            <img class="banner" src="{% static 'banner/food.png' %}" alt="banner">
+
+                        {% endif %}
+
+                    {% endif %}
+                </header><br>
+                <marquee direction="left" scrollamount="5" behavior="scroll">
+                    {% for upload in user_uploads %}
+                        <a href="{{ upload.link }}" target="_blank">
+                            <img src="{{ upload.img.url }}" alt="Image">
+                        </a>
+                    {% endfor %}
+                </marquee>
+
+                <section>
+                    <div class="starterlogo-info">
+                        {% if user_business.logo_url %}
+                            <div class="startercircular-logo">
+                                <!-- Your circular logo here -->
+                                <img src="{{ user_business.logo_url }}" alt="Logo Image">
+                            </div>
+                        {% endif %}
+                        <div class="starterbusiness-info">
+                            <h2>{{ business.name }}</h2>
+                            <div class="startercontact-info">
+                                <div class="startercontact-item">
+                                    <i class="fa-solid fa-phone"></i>
+                                    <span>{{ user_business.phone }}</span>
+                                </div>
+                                <div class="startercontact-item">
+                                    <i class="fa-solid fa-envelope"></i>
+                                    <span>{{ user_business.email }}</span>
+                                </div>
+                                <div class="startercontact-item">
+                                    <i class="fa-solid fa-map-location-dot"></i>
+                                    <span>{{ user_business.address }}</span>
+                                </div>
+                            </div><br><br>
+                            <p>{{ user_business.about }}</p>
+                        </div>
+                    </div>
+                </section><br>
+
+                <a href="https://flutterwave.com/donate/owbkr5asntut"><img class="bannekkr" src="{% static 'ads/donate.png' %}" alt="banner"></a>
+                <section>
+                    <div class="products">
+                        {% for product_key, product in user_products.items %}
+                        <div class="product-card">
+                            <p>Name: {{ product.name }}</p>
+                            <p>Price: {{ product.price }}</p>
+                            <p>Description: {{ product.description }}</p>
+                            <!-- Add more product details as needed -->
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                <a href="https://epicureanfeasthub.pythonanywhere.com/"><img class="bannekkr" src="{% static 'ads/epiceaurean.jpg' %}" alt="banner"></a>
+            </div>
+        </div>
+
+        <!--<button onclick="toggleDiv('home')">Home</button>-->
+
+
+    <!--STANDARD-->
+    {% elif business.subscription_plan == 'Standard Plan' %}
+
+
+        <div class="bbbtn-group" role="group" aria-label="Basic example">
+            <button style='display: block; margin: 0 auto;' class="sbtn btn btn-dark" onclick="toggleDiv('home')">Home</button>
+            <button style='display: block; margin: 0 auto;' class="sbtn btn btn-secondary" onclick="toggleDiv('menu')">Menu</button>
+        </div>
+
+        <div class="container">
+
+            <div id="home" class="page">
+                <header>
+                    {% if user_business.banner_url %}
+                        <img class="bannetkkr" src="{{ user_business.banner_url }}" alt="banner">
+                    {% else %}
+
+                        {% if business.industry == 'Technology' %}
+                            <img class="banner" src="{% static 'banner/technology.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Finance' %}
+                            <img class="banner" src="{% static 'banner/finance.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Healthcare' %}
+                            <img class="banner" src="{% static 'banner/healthcare.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Hospitality' %}
+                            <img class="banner" src="{% static 'banner/hospitality.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Education' %}
+                            <img class="banner" src="{% static 'banner/education.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Manufacturing' %}
+                            <img class="banner" src="{% static 'banner/manufacturing.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Marketing' %}
+                            <img class="banner" src="{% static 'banner/marketing.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Retail' %}
+                            <img class="banner" src="{% static 'banner/retail.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Energy' %}
+                            <img class="banner" src="{% static 'banner/energy.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Consulting' %}
+                            <img class="banner" src="{% static 'banner/consulting.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Food' %}
+                            <img class="banner" src="{% static 'banner/food.png' %}" alt="banner">
+
+                        {% endif %}
+
+                    {% endif %}
+                </header>
+
+                <marquee direction="left" scrollamount="5" behavior="scroll">
+                    {% for upload in user_uploads %}
+                        <a href="{{ upload.link }}" target="_blank">
+                            <img src="{{ upload.img.url }}" alt="Image">
+                        </a>
+                    {% endfor %}
+                </marquee>
+
+                <section>
+                    <div class="standardbusiness-name">
+                        <!-- Business name centered -->
+                        <h1>{{ user_business.business_name }}</h1>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="standardcontact-info">
+                        <!-- Phone, address, email centered and side by side -->
+                        <div class="standardcontact-item">
+                            <i class="fa-solid fa-phone"></i>
+                            <span>{{ user_business.phone }}</span>
+                        </div>
+                        <div class="standardcontact-item">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <span>{{ user_business.address }}</span>
+                        </div>
+                        <div class="standardcontact-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>{{ user_business.email }}</span>
+                        </div>
+                    </div>
+                </section>
+                <br>
+                <a href="https://techinnovom.framer.ai/"><img class="bannekkr" src="{% static 'ads/techinnovom.png' %}" alt="banner"></a>
+                <br>
+                <section>
+                    <div style="text-align: center;" class="standardabout">
+                        <!-- About section -->
+                        <p>{{ user_business.about }}</p>
+                    </div>
+                </section>
+
+                <section style="align-items: center;">
+                    <div class="stanimages">
+                        <!-- Images in a grid -->
+                        <!-- Use Django templating to generate the images -->
+                        {% if user_business.image_urls %}
+                            {% for image_url in user_business.image_urls|slice:":3" %}
+                                <img class="ssgrid-image" src="{{ image_url }}" alt="Image">
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </section><br>
+
+                <br>
+                <a href="https://www.travelstart.com.ng/?affId=221727"><img class="bannekkr" src="{% static 'ads/travelstart.gif' %}" alt="banner"></a>
+                <br>
+                <section>
+                    <div class="standarddescription">
+                        <!-- Description section -->
+                        <p>{{ user_business.description }}</p>
+                    </div>
+                </section>
+
+            </div>
+
+
+            <div id="menu" class="page hidden">
+                <header>
+                    <div class="standardlogo-business">
+                        <!-- Circular logo -->
+                        {% if user_business.logo_url %}
+                            <div class="standardcircular-logo">
+                                <img src="{{ user_business.logo_url }}" alt="Logo Image">
+                            </div>
+                        {% endif %}
+
+                        <div class="standardbusiness-info">
+                            <h1>{{ user_business.business_name }}</h1>
+                            <p>{{ user_business.address }}</p>
+                            <div class="standardmenu-contact-info">
+                                <div class="standardmenu-contact-item">
+                                    <i class="fa-solid fa-phone"></i>
+                                    <span>{{ user_business.phone }}</span>
+                                </div>
+                                <div class="standardmenu-contact-item">
+                                    <i class="fa-solid fa-envelope"></i>
+                                    <span>{{ user_business.email }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <marquee direction="left" scrollamount="5" behavior="scroll">
+                    {% for upload in user_uploads %}
+                        <a href="{{ upload.link }}" target="_blank">
+                            <img src="{{ upload.img.url }}" alt="Image">
+                        </a>
+                    {% endfor %}
+                </marquee>
+
+                <section>
+                    <div class="products">
+                        {% for product_key, product in user_products.items %}
+                        <div class="card" style="width: 18rem;">
+                            {% if product.image_url %}
+                                <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}">
+                            {% endif %}
+
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text">{{ product.description }}</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+
+                                {% if business.currency == 'GBP' %}
+                                    <li class="list-group-item">£{{ product.price }}</li>
+                                {% elif business.currency == 'NGN' %}
+                                    <li class="list-group-item">₦{{ product.price }}</li>
+                                {% elif business.currency == 'USD' %}
+                                    <li class="list-group-item">${{ product.price }}</li>
+                                {% else %}
+                                {% endif %}
+                            </ul>
+
+                            <!-- Add more product details as needed -->
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+            <a href="https://truehost.com.ng/cloud/aff.php?aff=1851"><img class="bannekkr" src="{% static 'ads/truehost.jpg' %}" alt="banner"></a>
+        </div>
+
+
+
+
+    <!--PRO-->
+    {% elif business.subscription_plan == 'Pro Plan' %}
+
+        <div class="bbbtn-group" role="group" aria-label="Basic example">
+            <button class="pbtn btn btn-primary" onclick="toggleDiv('home')">Home</button>
+            <button class="pbtn btn btn-info" onclick="toggleDiv('menu')">Menu</button>
+            <button class="pbtn btn btn-secondary" onclick="toggleDiv('gallery')">Gallery</button>
+            <button class="pbtn btn btn-dark" onclick="toggleDiv('contact')">Contact</button>
+        </div>
+
+        <div class="container">
+
+            <div id="home" class="page">
+                <header>
+                    {% if user_business.banner_url %}
+                        <img class="bannetkkr" src="{{ user_business.banner_url }}" alt="banner">
+                    {% else %}
+
+                        {% if business.industry == 'Technology' %}
+                            <img class="banner" src="{% static 'banner/technology.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Finance' %}
+                            <img class="banner" src="{% static 'banner/finance.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Healthcare' %}
+                            <img class="banner" src="{% static 'banner/healthcare.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Hospitality' %}
+                            <img class="banner" src="{% static 'banner/hospitality.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Education' %}
+                            <img class="banner" src="{% static 'banner/education.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Manufacturing' %}
+                            <img class="banner" src="{% static 'banner/manufacturing.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Marketing' %}
+                            <img class="banner" src="{% static 'banner/marketing.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Retail' %}
+                            <img class="banner" src="{% static 'banner/retail.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Energy' %}
+                            <img class="banner" src="{% static 'banner/energy.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Consulting' %}
+                            <img class="banner" src="{% static 'banner/consulting.png' %}" alt="banner">
+
+                        {% elif business.industry == 'Food' %}
+                            <img class="banner" src="{% static 'banner/food.png' %}" alt="banner">
+
+                        {% endif %}
+
+                    {% endif %}
+                </header>
+
+                <section>
+                    <div class="probusiness-name">
+                        <!-- Business name centered -->
+                        <h1>{{ user_business.buisness_name }}</h1>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="procontact-info">
+                        <!-- Phone, address, email centered and side by side -->
+                        <div class="procontact-item">
+                            <i class="fa-solid fa-phone"></i>
+                            <span>{{ user_business.phone }}</span>
+                        </div>
+                        <div class="procontact-item">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <span>{{ user_business.address }}</span>
+                        </div>
+                        <div class="procontact-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>{{ user_business.email }}</span>
+                        </div>
+                    </div>
+                </section><br>
+                <a href="https://clients.domainking.ng/aff.php?aff=5123"><img class="bannekkr" src="{% static 'ads/domainking.png' %}" alt="banner"></a>
+                <br>
+                <section>
+                    <div class="proabout">
+                        <!-- About section -->
+                        <p>{{ user_business.about }}</p>
+                    </div>
+                </section>
+
+            </div>
+
+            <div id="menu" class="page hidden">
+                <header>
+                    {% if user_business.logo_url %}
+                    <div class="page-container">
+                        <!-- Circle logo centered -->
+                        <div class="image-container">
+                            <img src="{{ user_business.logo_url }}" alt="Logo Image">
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </header><br>
+
+                <section>
+                    <div class="address">
+                        <!-- Address centered -->
+                        <p>{{ user_business.address }}</p>
+                    </div>
+                </section><br>
+
+                <section>
+                    <div class="menu-contact-info">
+                        <!-- Phone and email centered and side by side -->
+                        <div class="menu-contact-item">
+                            <i class="fa-solid fa-phone"></i>
+                            <span>{{ user_business.phone }}</span>
+                        </div>
+                        <div class="menu-contact-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>{{ user_business.email }}</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="description">
+                        <!-- Description centered -->
+                        <p>{{ user_business.description }}</p>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="products">
+                        {% for product_key, product in user_products.items %}
+                        <div class="card" style="width: 18rem;">
+                            {% if product.image_url %}
+                                <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}">
+                            {% endif %}
+
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text">{{ product.description }}</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+
+                                {% if business.currency == 'GBP' %}
+                                    <li class="list-group-item">£{{ product.price }}</li>
+                                {% elif business.currency == 'NGN' %}
+                                    <li class="list-group-item">₦{{ product.price }}</li>
+                                {% elif business.currency == 'USD' %}
+                                    <li class="list-group-item">${{ product.price }}</li>
+                                {% else %}
+                                {% endif %}
+                            </ul>
+
+                            <!-- Add more product details as needed -->
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+
+            <div id="gallery" class="page hidden">
+                <div class="menucontainer">
+                    <header>
+                        {% if user_business.logo_url %}
+                        <div class="page-container">
+                            <!-- Circle logo centered -->
+                            <div class="image-container">
+                                <img src="{{ user_business.logo_url }}" alt="Logo Image">
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </header><br>
+
+                    <section>
+                        <div class="address">
+                            <!-- Address here -->
+                            {{ user_business.address }}
+                        </div>
+                    </section>
+
+
+                    <section style="align-items: center;">
+                        <div class="stanimages">
+                            <!-- Images in a grid -->
+                            <!-- Use Django templating to generate the images -->
+                            {% if user_business.image_urls %}
+                                {% for image_url in user_business.image_urls %}
+                                    <img class="ssgrid-image" src="{{ image_url }}" alt="Image">
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </section><br>
+
+
+
+                </div>
+
+            </div>
+
+            <div id="contact" class="page hidden">
+                <div class="contactcontainer">
+                    <header>
+                        {% if user_business.logo_url %}
+                        <div class="page-container">
+                            <!-- Circle logo centered -->
+                            <div class="image-container">
+                                <img src="{{ user_business.logo_url }}" alt="Logo Image">
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </header>
+
+                    <section>
+                        <div class="menu-contact-info">
+                            <!-- Email -->
+                            <div class="menu-contact-item">
+                                <i class="fa-solid fa-envelope"></i>
+                                <span>{{ user_business.email }}</span>
+                            </div>
+                            <!-- Phone -->
+                            <div class="menu-contact-item">
+                                <i class="fa-solid fa-phone"></i>
+                                <span>{{ user_business.phone }}</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="address">
+                            <!-- Address -->
+                            <p>{{ user_business.address }}</p>
+                        </div>
+
+
+                    </section>
+                    <div style="width: 90%; margin: 0 auto;">
+                        <form style="border: 2px solid #000; border-radius: 5px; padding: 20px;" action="mailto:{{ user_business.email }}?cc=techinnovom@gmail.com" method="post" enctype="text/plain">
+
+                            <div class="mb-3">
+                                <label class="form-label" for="name">Name:</label><br>
+                                <input class="form-control" type="text" id="name" name="name" required><br>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="email">Email:</label><br>
+                                <input class="form-control" type="email" id="email" name="email"><br>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="phone">Phone Number:</label><br>
+                                <input class="form-control" type="tel" id="phone" name="phone"><br>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="message">Message:</label><br>
+                                <textarea class="form-control" id="message" name="message" rows="4" required></textarea><br><br>
+                            </div>
+
+                            <input class="btn btn-dark" type="submit" value="Send">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    {% else %}
+    {% endif %}
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        function toggleDiv(divId) {
+        var divs = document.querySelectorAll('.page');
+
+        for (var i = 0; i < divs.length; i++) {
+            if (divs[i].id === divId) {
+            divs[i].classList.remove('hidden');
+            } else {
+            divs[i].classList.add('hidden');
+            }
+        }
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Edit Product
+{% endblock %}
+
+{% block styles %}
+    <style>
+        /* CSS styles specific to this page */
+        .bannekkr {
+            max-width: 100%;
+            width: 100%;
+            height: 200px;
+            display: block;
+            margin: 0 auto;
+
+        }
+
+
+        @media only screen and (max-width: 768px) {
+
+
+            .bannekkr .bannetkkr {
+
+
+                max-width: 100%;
+                width: 100%;
+                height: 120px;
+                display: block;
+                margin: 0 auto;
+            }
+        }
+
+        /* Add more custom styles as needed */
+    </style>
+{% endblock %}
+
+
+{% block content %}
+<a href="https://epicureanfeasthub.pythonanywhere.com/"><img class="bannekkr" src="{% static 'ads/epiceaurean.jpg' %}" alt="banner"></a>
+
+<form method="post">
+    <h1>Edit Product</h1>
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label" for="name">Product Name:</label><br>
+        <input class="form-control" type="text" id="name" name="name" value="{{ product.name }}"><br>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="price">Price:</label><br>
+        <input class="form-control" type="text" id="price" name="price" value="{{ product.price }}"><br>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="description">Description:</label><br>
+        <textarea class="form-control" id="description" name="description">{{ product.description }}</textarea><br>
+    </div>
+
+    <!-- Add other fields as needed -->
+    <button class="btn btn-primary" type="submit">Update Product</button>
+</form>
+<a href="https://techinnovom.framer.ai/"><img class="bannekkr" src="{% static 'ads/techinnovom.png' %}" alt="banner"></a>
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        // JavaScript code specific to this page
+
+        // Add more JavaScript code as needed
+    </script>
+{% endblock %}

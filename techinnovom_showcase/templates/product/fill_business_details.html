@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Register Buisness
+{% endblock %}
+
+{% block styles %}
+    <style>
+        /* CSS styles specific to this page */
+        .bannekkr {
+            max-width: 100%;
+            width: 100%;
+            height: 200px;
+            display: block;
+            margin: 0 auto;
+
+        }
+
+
+        @media only screen and (max-width: 768px) {
+
+
+            .bannekkr .bannetkkr {
+
+
+                max-width: 100%;
+                width: 100%;
+                height: 120px;
+                display: block;
+                margin: 0 auto;
+            }
+        }
+
+        /* Add more custom styles as needed */
+    </style>
+{% endblock %}
+
+{% block content %}
+    <a href="https://www.travelstart.com.ng/?affId=221727"><img class="bannekkr" src="{% static 'ads/travelstart.gif' %}" alt="banner"></a>
+
+    <form method="post">
+        <h1>Fill Business Details -- {{ selected_plan }}</h1>
+        {% csrf_token %}
+        <!-- Business details form fields (name, industry, description) -->
+        <div class="mb-3">
+            <input type="text" class="form-control" name="name" placeholder="Business Name" required><br>
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" name="industry" required>
+                <option value="" selected disabled>Select Industry</option>
+                <option value="Technology">Technology</option>
+                <option value="Finance">Finance</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Hospitality">Hospitality</option>
+                <option value="Education">Education</option>
+                <option value="Manufacturing">Manufacturing</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Retail">Retail</option>
+                <option value="Energy">Energy</option>
+                <option value="Consulting">Consulting</option>
+                <option value="Food">Food</option>
+                <!-- Add more industry options as needed -->
+            </select><br>
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" name="currency" required>
+                <option value="" selected disabled>Select Currency</option>
+                <option value="GBP">British Pound Sterling</option>
+                <option value="NGN">Nigerian Naira</option>
+                <option value="USD">United States Dollar</option>
+                <!-- Add more industry options as needed -->
+            </select><br>
+        </div>
+
+        <div class="mb-3">
+            <textarea class="form-control" name="description" placeholder="Description" required></textarea><br>
+        </div>
+
+        <input type="hidden" name="subscription_plan" value="{{ selected_plan }}" />
+        <button class="btn btn-primary" type="submit">Continue</button>
+    </form>
+    <a href="https://truehost.com.ng/cloud/aff.php?aff=1851"><img class="bannekkr" src="{% static 'ads/truehost.jpg' %}" alt="banner"></a>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // JavaScript code specific to this page
+
+        // Add more JavaScript code as needed
+    </script>
+{% endblock %}

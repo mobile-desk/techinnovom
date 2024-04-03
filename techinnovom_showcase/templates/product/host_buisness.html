@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+ Host Buisness
+{% endblock %}
+
+{% block styles %}
+    <style>
+        /* CSS styles specific to this page */
+        .bannekkr {
+            max-width: 100%;
+            width: 100%;
+            height: 200px;
+            display: block;
+            margin: 0 auto;
+
+        }
+
+
+        @media only screen and (max-width: 768px) {
+
+
+            .bannekkr .bannetkkr {
+
+
+                max-width: 100%;
+                width: 100%;
+                height: 120px;
+                display: block;
+                margin: 0 auto;
+            }
+        }
+
+        /* Add more custom styles as needed */
+    </style>
+{% endblock %}
+
+{% block content %}
+    <a href="https://flutterwave.com/donate/owbkr5asntut"><img class="bannekkr" src="{% static 'ads/donate.png' %}" alt="banner"></a>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label" for="banner">Banner Image:</label>
+            <input class="form-control" type="file" id="banner" name="banner" accept="image/*" required><br>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="phone">Phone Number:</label>
+            <input class="form-control" type="tel" id="phone" name="phone" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="email">Email:</label>
+            <input class="form-control" type="email" id="email" name="email" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="logo">Logo (Max size: 2MB):</label>
+            <input class="form-control" type="file" id="logo" name="logo" accept="image/*" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="description">Description:</label>
+            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="about">About:</label>
+            <textarea class="form-control" id="about" name="about" rows="4" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="address">Address:</label>
+            <textarea class="form-control" id="address" name="address" rows="4" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="images">Additional Images (Max 10):</label>
+            <input class="form-control" type="file" id="images" name="images[]" accept="image/*" multiple>
+        </div>
+
+
+        <input class="btn btn-primary" type="submit" value="Submit">
+    </form>
+
+    <script>
+        document.getElementById('images').addEventListener('change', function() {
+            var input = this;
+            var fileCount = input.files.length;
+            var maxFiles = 10;
+
+            if (fileCount > maxFiles) {
+                alert("You can only upload a maximum of 10 images.");
+                input.value = ''; // Clear the selected files
+            }
+        });
+    </script>
+    <a href="https://clients.domainking.ng/aff.php?aff=5123"><img class="bannekkr" src="{% static 'ads/domainking.png' %}" alt="banner"></a>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // JavaScript code specific to this page
+
+        // Add more JavaScript code as needed
+    </script>
+{% endblock %}

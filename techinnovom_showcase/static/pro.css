@@ -1,0 +1,168 @@
+/* styles.css */
+
+/* Business name centered */
+.business-name {
+    text-align: center;
+}
+
+.business-name h1 {
+    font-size: 24px; /* Adjust font size */
+    margin-bottom: 10px;
+}
+
+/* About section */
+.about {
+    text-align: center;
+    margin-top: 20px; /* Adjust spacing */
+}
+
+.contact-info {
+    display: flex;
+    justify-content: center;
+}
+
+.contact-item {
+    margin: 0 10px; /* Adjust spacing between contact items */
+    display: flex;
+    align-items: center;
+}
+
+.contact-item i {
+    margin-right: 5px; /* Adjust spacing between icon and text */
+}
+
+
+/* menu */
+
+/* styles.css */
+
+/* Logo centered */
+.logo {
+    text-align: center;
+}
+
+.circular-logo {
+    /* Add styles for circular logo */
+}
+
+/* Address centered */
+.address {
+    text-align: center;
+}
+
+.address p {
+    font-size: 18px; /* Adjust font size */
+    margin-bottom: 10px;
+}
+
+/* Contact info centered and side by side */
+.menu-contact-info {
+    display: flex;
+    justify-content: center;
+}
+
+.menu-contact-item {
+    margin: 0 10px; /* Adjust spacing between contact items */
+    display: flex;
+    align-items: center;
+}
+
+.menu-contact-item i {
+    margin-right: 5px; /* Adjust spacing between icon and text */
+}
+
+/* Description centered */
+.description {
+    text-align: center;
+}
+
+.description p {
+    font-size: 18px; /* Adjust font size */
+    margin-bottom: 10px;
+}
+
+/* Products */
+.products {
+    /* Add styles for products grid */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust min/max width as needed */
+    gap: 20px; /* Adjust gap between items */
+}
+
+
+/* gallery */
+/* styles.css */
+
+/* Center everything */
+.menucontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Logo */
+.menulogo {
+    margin-top: 20px; /* Adjust margin as needed */
+    /* Add styles for logo */
+}
+
+/* Address */
+.menuaddress {
+    text-align: center;
+    margin-top: 20px; /* Adjust margin as needed */
+    /* Add styles for address */
+}
+
+/* Images in a responsive grid */
+.menuimages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust min/max width as needed */
+    gap: 20px; /* Adjust gap between items */
+    margin-top: 20px; /* Adjust margin as needed */
+}
+
+.images img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* contact */
+/* styles.css */
+
+/* Center everything */
+.contactcontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Logo */
+.contactlogo {
+    margin-top: 20px; /* Adjust margin as needed */
+    /* Add styles for logo */
+}
+
+/* Contact info */
+.ccontact-info {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Adjust margin as needed */
+}
+
+.ccontact-item {
+    margin: 0 10px; /* Adjust spacing between contact items */
+    display: flex;
+    align-items: center;
+}
+
+.ccontact-item i {
+    margin-right: 5px; /* Adjust spacing between icon and text */
+}
+
+/* Address */
+.contactaddress {
+    text-align: center;
+    margin-top: 20px; /* Adjust margin as needed */
+    /* Add styles for address */
+}

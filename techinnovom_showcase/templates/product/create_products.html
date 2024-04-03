@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+ Add Buisness
+{% endblock %}
+
+{% block styles %}
+    <style>
+        /* CSS styles specific to this page */
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        .ddd {
+          font-family: Arial, sans-serif;
+          background-color: #f1f1f1;
+          padding: 20px;
+        }
+
+        .radio-group {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .radio-label {
+          display: flex;
+          align-items: center;
+          padding: 0.5em;
+          margin-bottom: 0.5em;
+          background-color: #fff;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .radio-label:hover {
+          background-color: #e6e6e6;
+        }
+
+        .radio-input {
+          position: absolute;
+          opacity: 0;
+        }
+
+        .radio-input:checked + .radio-label {
+          background-color: #eceda4;
+          border-color: #edf00c;
+        }
+
+        .radio-input:focus + .radio-label {
+          outline: 2px solid #b5b80d;
+        }
+
+        .radio-inner-circle {
+          display: inline-block;
+          width: 1em;
+          height: 1em;
+          border: 2px solid #888;
+          border-radius: 50%;
+          margin-right: 0.5em;
+          transition: border-color 0.2s;
+          position: relative;
+        }
+
+        .radio-label:hover .radio-inner-circle {
+          border-color: #555;
+        }
+
+        .radio-input:checked + .radio-label .radio-inner-circle {
+          border-color: #e3e649;
+        }
+
+        .radio-input:checked + .radio-label .radio-inner-circle::after {
+          content: '';
+          display: block;
+          width: 0.5em;
+          height: 0.5em;
+          background-color: #e3e649;
+          border-radius: 50%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+
+
+        .bannekkr {
+            max-width: 100%;
+            width: 100%;
+            height: 200px;
+            display: block;
+            margin: 0 auto;
+
+        }
+
+
+        @media only screen and (max-width: 768px) {
+
+
+            .bannekkr .bannetkkr {
+
+
+                max-width: 100%;
+                width: 100%;
+                height: 120px;
+                display: block;
+                margin: 0 auto;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+    </style>
+{% endblock %}
+
+{% block content %}
+    <a href="https://truehost.com.ng/cloud/aff.php?aff=1851"><img class="bannekkr" src="{% static 'ads/truehost.jpg' %}" alt="banner"></a>
+    <div class="ddd">
+        <h1>Choose a Plan</h1>
+        {% for plan in plans %}
+            <div class="plan">
+                <h2>{{ plan.name }}</h2>
+                <ul>
+                    {% for feature in plan.features %}
+                    <li>{{ feature }}</li>
+                    {% endfor %}
+                </ul>
+                <p class="font-monospace">Price: {{ plan.price }}</p>
+
+            </div>
+        {% endfor %}
+
+        <a href="https://flutterwave.com/donate/owbkr5asntut"><img class="bannekkr" src="{% static 'ads/donate.png' %}" alt="banner"></a>
+
+        <h3 class="text-center"> Choose a Plan </h3>
+
+
+        <div class="radio-group">
+            <form method="POST">
+                {% csrf_token %}
+                {% for plan in plans %}
+                    <div>
+                        <input class="radio-input" type="radio" name="selected_plan" value="{{ plan.name }}" id="{{ plan.name }}">
+                        <label class="radio-label" for="{{ plan.name }}">
+                            <span class="radio-inner-circle"></span>
+                            {{ plan.name }} - {{ plan.price }}
+                        </label>
+                    </div>
+                {% endfor %}
+                <button class="btn btn-outline-secondary" type="submit">Select Plan</button>
+            </form>
+        </div>
+    </div>
+    <a href="https://clients.domainking.ng/aff.php?aff=5123"><img class="bannekkr" src="{% static 'ads/domainking.png' %}" alt="banner"></a>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // JavaScript code specific to this page
+
+        // Add more JavaScript code as needed
+    </script>
+{% endblock %}

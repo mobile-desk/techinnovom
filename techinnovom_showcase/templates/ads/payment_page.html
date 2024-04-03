@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ads Payment Page</title>
+</head>
+<body>
+    <h2>Payment Page</h2>
+    <p>Total amount: {{ total_amount }}</p>
+    <form method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay">
+        {% csrf_token %}
+        <input type="hidden" name="public_key" value="FLWPUBK-0931877fce31c4559c69e72ba49c553c-X" />
+        <!-- Unique transaction reference based on the selected plan -->
+        <input type="hidden" name="tx_ref" value="{{ tx_ref }}" />
+        <input type="hidden" name="amount" value=" {{ tamount }} " />
+        <input type="hidden" name="currency" value="{{ currency }}" />
+        <input type="hidden" name="redirect_url" value="{{ redirect_url }}" />
+        <input type="email" name="customer[email]" value="{{ customer_email }}" placeholder="Email" required/>
+        <!-- Payment options -->
+        <input type="hidden" name="payment_options" value="card, ussd, account, banktransfer, mpesa, mobilemoneyghana, mobilemoneyfranco, mobilemoneyuganda, mobilemoneyrwanda, mobilemoneyzambia, barter, nqr, credit" />
+
+        <!-- Add payment form fields here -->
+        <button class="btn btn-outline-dark text-center" type="submit">Pay Now</button>
+    </form>
+</body>
+</html>
+
+
+
+
+

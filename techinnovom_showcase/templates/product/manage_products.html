@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{{ request.user.username }}'s products
+{% endblock %}
+
+{% block styles %}
+    <style>
+        /* CSS styles specific to this page */
+        .bannekkr {
+            max-width: 100%;
+            width: 100%;
+            height: 200px;
+            display: block;
+            margin: 0 auto;
+
+        }
+
+
+        @media only screen and (max-width: 768px) {
+
+
+            .bannekkr .bannetkkr {
+
+
+                max-width: 100%;
+                width: 100%;
+                height: 120px;
+                display: block;
+                margin: 0 auto;
+            }
+        }
+
+        /* Add more custom styles as needed */
+    </style>
+{% endblock %}
+
+{% block content %}
+    <a href="https://epicureanfeasthub.pythonanywhere.com/"><img class="bannekkr" src="{% static 'ads/epiceaurean.jpg' %}" alt="banner"></a>
+    <h1 class="text-center">Manage Products</h1>
+
+    <p>Total Products: {{ user_products|length }}</p>
+
+
+
+
+
+    {% if user_products|length > 0 %}
+
+        {% for product_key, product in user_products.items %}
+
+            <div class="card" style="width: 18rem;">
+                {% if product.image_url %}
+                    <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% if business.currency == 'GBP' %}
+                        <li class="list-group-item">£{{ product.price }}</li>
+                    {% elif business.currency == 'NGN' %}
+                        <li class="list-group-item">₦{{ product.price }}</li>
+                    {% elif business.currency == 'USD' %}
+                        <li class="list-group-item">${{ product.price }}</li>
+                    {% else %}
+                    {% endif %}
+                </ul>
+                <div class="card-body">
+                    <a href="{% url 'edit_product' product_key %}" class="card-link">Edit</a>
+                    <form method="POST" action="{% url 'delete_product' product_key %}">
+                        {% csrf_token %}
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                </div>
+            </div><br><br>
+
+        {% endfor %}
+
+
+
+
+
+    {% else %}
+        <p class="text-center">No products found.</p>
+    {% endif %}
+
+    <a href="https://techinnovom.framer.ai/"><img class="bannekkr" src="{% static 'ads/techinnovom.png' %}" alt="banner"></a>
+
+    {% if subscription_plan == 'Free Plan' %}
+        {% if user_products|length < 10 %}
+            <a style="text-decoration: none;" href="{% url 'product_listing' %}"><button style="display: block; margin: 0 auto;" class="btn btn-dark">Add New Product</button></a>
+        {% endif %}
+    {% elif subscription_plan == 'Starter Plan' %}
+        {% if user_products|length < 50 %}
+            <a style="text-decoration: none;" href="{% url 'product_listing' %}"><button style="display: block; margin: 0 auto;" class="btn btn-dark">Add New Product</button></a>
+        {% endif %}
+    {% elif subscription_plan == 'Standard Plan' %}
+        {% if user_products|length < 200 %}
+            <a style="text-decoration: none;" href="{% url 'product_listing' %}"><button style="display: block; margin: 0 auto;" class="btn btn-dark">Add New Product</button></a>
+        {% endif %}
+    {% elif subscription_plan == 'Pro Plan' %}
+
+        <a style="text-decoration: none;" href="{% url 'product_listing' %}"><button style="display: block; margin: 0 auto;" class="btn btn-dark">Add New Product</button></a>
+
+    {% endif %}
+    <a href="https://www.travelstart.com.ng/?affId=221727"><img class="bannekkr" src="{% static 'ads/travelstart.gif' %}" alt="banner"></a>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // JavaScript code specific to this page
+
+        // Add more JavaScript code as needed
+    </script>
+{% endblock %}

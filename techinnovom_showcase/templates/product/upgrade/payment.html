@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Payment
+{% endblock %}
+
+{% block styles %}
+    <style>
+        /* CSS styles specific to this page */
+
+        /* Add more custom styles as needed */
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center">Payment</h1>
+    <p class="text-center">Selected Plan: {{ selected_plan }}</p>
+
+
+    <form method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay">
+        {% csrf_token %}
+        <input type="hidden" name="public_key" value="FLWPUBK-0931877fce31c4559c69e72ba49c553c-X" />
+
+        <!-- Unique transaction reference based on the selected plan -->
+        <input type="hidden" name="tx_ref" value="{{ tx_ref }}" />
+
+        <!-- Amount based on the selected plan -->
+        <input type="hidden" name="amount" value=" {{ amount }} " />
+
+        <!-- Currency (e.g., NGN) -->
+        <input type="hidden" name="currency" value="{{ currency }}" />
+
+        <!-- Redirect URL after payment completion -->
+        <input type="hidden" name="redirect_url" value="{{ redirect_url }}" />
+
+        <!-- Business name from the previous form -->
+        <input type="hidden" name="customer[name]" value="{{ business_name }}" />
+
+        <!-- Logged in user's email -->
+        <input type="hidden" name="customer[email]" value="{{ customer_email }}" />
+
+        <!-- Logged in user's username -->
+        <input type="hidden" name="meta[token]" value="{{ meta_token }}" />
+
+        <!-- Payment options -->
+        <input type="hidden" name="payment_options" value="card, ussd, account, banktransfer, mpesa, mobilemoneyghana, mobilemoneyfranco, mobilemoneyuganda, mobilemoneyrwanda, mobilemoneyzambia, barter, nqr, credit" />
+
+        <button class="btn btn-outline-dark text-center" type="submit">Pay Now</button>
+    </form>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // JavaScript code specific to this page
+
+        // Add more JavaScript code as needed
+    </script>
+{% endblock %}

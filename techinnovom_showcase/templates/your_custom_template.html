@@ -1,0 +1,80 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+
+    {% block title %}Login - TechInnovom Showcase{% endblock %}
+    {% block styles %}
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+            .login-container {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                width: 300px;
+            }
+            .login-container h2 {
+                margin-bottom: 20px;
+                text-align: center;
+            }
+            .login-container input[type="text"],
+            .login-container input[type="password"],
+            .login-container input[type="submit"] {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+            .login-container input[type="submit"] {
+                background-color: #007bff;
+                color: #fff;
+                cursor: pointer;
+            }
+            .login-container input[type="submit"]:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    {% endblock %}
+
+
+
+
+    {% block content %}
+        <div class="login-container">
+
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    <strong> Message: </strong> {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+    
+    
+            <h2>Login Form</h2>
+            <form method="post">
+                {% csrf_token %}
+                <!-- Custom form fields -->
+                <input type="email" name="email" required>
+                <!-- Other fields if needed -->
+                <button type="submit">Reset Password</button>
+            </form>
+            <p>  Don't have an account? <a href='{% url "signup" %}'>Sign Up</a></p>
+        
+
+        </div>
+
+    {% endblock %}

@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Profile
+{% endblock %}
+
+{% block styles %}
+    <style>
+        /* CSS styles specific to this page */
+        .bannekkr {
+                max-width: 100%;
+                width: 100%;
+                height: 200px;
+                display: block;
+                margin: 0 auto;
+
+            }
+
+
+            @media only screen and (max-width: 768px) {
+
+
+                .bannekkr .bannetkkr {
+
+
+                    max-width: 100%;
+                    width: 100%;
+                    height: 90px;
+                    display: block;
+                    margin: 0 auto;
+                }
+            }
+
+        /* Add more custom styles as needed */
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <!-- profile.html -->
+
+    <h2>User Profile</h2>
+    <p>Full Name: {{ user.first_name }}</p>
+    <p>Username: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <span>
+      <i class="fa-solid fa-coins"></i> {{ user.points }}
+    </span><br><br>
+
+    <a href="https://clients.domainking.ng/aff.php?aff=5123"><img class="bannekkr" src="{% static 'ads/domainking.png' %}" alt="banner"></a>
+
+
+    {% if user.has_business %}
+        <p>Total Products: {{ user_products|length }}</p>
+
+
+
+        {% for product_key, product in user_products.items|slice:":5"  %}
+
+            <div class="card" style="width: 18rem;">
+                {% if product.image_url %}
+                    <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% if business.currency == 'GBP' %}
+                        <li class="list-group-item">£{{ product.price }}</li>
+                    {% elif business.currency == 'NGN' %}
+                        <li class="list-group-item">₦{{ product.price }}</li>
+                    {% elif business.currency == 'USD' %}
+                        <li class="list-group-item">${{ product.price }}</li>
+                    {% else %}
+                    {% endif %}
+                </ul>
+                <div class="card-body">
+                    <a href="{% url 'edit_product' product_key %}" class="card-link">Edit</a>
+                    <form method="POST" action="{% url 'delete_product' product_key %}">
+                        {% csrf_token %}
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                </div>
+            </div><br><br>
+
+        {% endfor %}
+
+
+
+
+        <button class="btn btn-primary" onclick="window.location.href='{% url 'manage_products' %}'">Manage Products</button>
+        <a style="text-decoration: none;" href="{% url 'upgrade' %}"><button type="button" class="btn btn-outline-primary">
+            Upgrade Plans
+        </button></a><br><br>
+
+        {% if user.host_buisness %}
+            <button class="btn btn-outline-success" id="copyButton"> Share Business Link</button>
+            <script>
+                document.getElementById('copyButton').addEventListener('click', function() {
+                    var link = 'http://techinnovomshowcase.pythonanywhere.com/business/{{ request.user.username }}/';
+
+                    // Create a temporary input element
+                    var input = document.createElement('input');
+                    input.setAttribute('value', link);
+                    document.body.appendChild(input);
+
+                    // Select the text inside the input element
+                    input.select();
+                    input.setSelectionRange(0, 99999); // For mobile devices
+
+                    // Copy the selected text
+                    document.execCommand('copy');
+
+                    // Remove the temporary input element
+                    document.body.removeChild(input);
+
+                    // Alert the user that the link has been copied
+                    alert('Link copied to clipboard: ' + link);
+                });
+            </script>
+        {% else %}
+            <a style="text-decoration: none;" href="{% url 'host_buisness' %}"><button type="button" class="btn btn-outline-success">
+                Take Your Buisness Live
+            </button></a>
+
+        {% endif %}
+    {% else %}
+
+        <a style="text-decoration: none;" href="{% url 'create_products' %}"><button type="button" class="btn btn-outline-primary">
+            List Products
+        </button></a>
+    {% endif %}
+
+    <hr>
+    <marquee><blink>
+        <h1 style="color:green;">
+            EARN BIG TODAY &nbsp;  &nbsp;   &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp; &nbsp; EARN BIG TODAY    &nbsp;  &nbsp;   &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp; &nbsp; &nbsp;  &nbsp;  EARN BIG TODAY  &nbsp;  &nbsp;   &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp; &nbsp; &nbsp;  &nbsp; EARN BIG TODAY
+        </h1>
+    </blink></marquee>
+    <p>
+
+
+        Welcome to TechInnovom Showcase! Are you ready to take your business to the next level?<br>
+        Share your referral code <i id="copyButton1"> [ {{ user.username }} ] </i> with friends, family, and followers to unlock exciting rewards!<br>
+
+        With our referral program, every action counts:<br>
+
+        <ul>
+            <li>Refer a friend: 1 point<br></li>
+            <li>Your referral hosts their business: 10 points<br></li>
+            <li>Your referral upgrades to Starter plan: 1,000 points<br></li>
+            <li>Your referral upgrades to Standard plan: 3,000 points<br></li>
+            <li>Your referral upgrades to Pro plan: 5,000 points<br><br></li>
+        </ul>
+
+        Accumulate points and unlock new features and benefits for your business. Need to upgrade? Here's what you'll need:<br>
+
+        <ul>
+            <li>Starter Plan: 5,000 points<br></li>
+            <li>Standard Plan: 15,000 points<br></li>
+            <li>Pro Plan: 25,000 points<br></li>
+        </ul>
+
+
+        But that's not all! Explore additional privileges with our Distance to Purchase setting in-app.<br>
+
+        Start sharing your link today and watch your business soar to new heights with TechInnovom Showcase!<br>
+
+        Have them use your referral code <i id="copyButton1"> [ {{ user.username }} ] </i> during signup.
+    </p>
+
+
+    <script>
+        document.getElementById('copyButton1').addEventListener('click', function() {
+            var uuu = '{{ user.username }}';
+
+            // Create a temporary input element
+            var input = document.createElement('input');
+            input.setAttribute('value', uuu);
+            document.body.appendChild(input);
+            // Select the text inside the input element
+            input.select();
+            input.setSelectionRange(0, 99999); // For mobile devices
+            // Copy the selected text
+            document.execCommand('copy');
+            // Remove the temporary input element
+            document.body.removeChild(input);
+            // Alert the user that the link has been copied
+            alert('Link copied to clipboard: ' + uuu);
+        });
+    </script>
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // JavaScript code specific to this page
+
+        // Add more JavaScript code as needed
+    </script>
+{% endblock %}
+
+
+
