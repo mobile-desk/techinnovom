@@ -1,0 +1,7 @@
+<!-- following.html -->
+<h2>Following</h2>
+<ul>
+    {% for followed_user in following %}
+        <li>{{ followed_user.username }}</li>
+    {% endfor %}
+</ul>

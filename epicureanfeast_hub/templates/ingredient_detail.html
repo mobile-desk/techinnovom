@@ -1,0 +1,53 @@
+<!-- templates/ingredient_detail.html -->
+{% extends 'base.html' %}
+
+{% block title %}{{ ingredient.name }} Details{% endblock %}
+
+{% block content %}
+    <div style="text-align: center;">
+        <h2>{{ ingredient.name|upper }} DETAILS</h2>
+
+        <div style="margin: auto;">
+            <p>Ingredient Name: </p>{{ ingredient.name }}<br>
+            <p>Ingredient Description: </p>{{ ingredient.description }}<br>
+            <!-- Add other details as needed -->
+        </div>
+
+
+        <p class="title">Recipes Using {{ ingredient.name|upper }}</p>
+
+        <div class="ppcard">
+            {% for recipe in random_recipes %}
+                <div class="ppuser__container">
+                    <div class="ppuser">
+
+                        <div class="ppimage">
+                           {% if recipe.image %}
+                                <img class="ppimage" src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+
+                            {% elif recipe.image_url %}
+                                <img class="ppimage" src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
+                            {% else %}
+                                <img class="ppimage" src="https://epicureanfeasthub.pythonanywhere.com/static/epicurean-removebg-preview.png" alt="{{ recipe.title }}">
+                            {% endif %}
+                        </div>
+                        <div class="ppuser__content">
+                            <div class="pptext">
+                              <span class="ppname">{{ recipe.title }}</span>
+                              <p class="ppusername">{{ recipe.instructions|slice:":100" }}</p>
+                            </div>
+                            <a href="{% url 'recipe_detail' recipe_id=recipe.id %}"><button class="ppfollow">View More</button></a>
+                        </div>
+                    </div>
+                </div><hr>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+
+  <!-- Optionally, include links to related recipes or other information -->
+{% endblock %}
+
+

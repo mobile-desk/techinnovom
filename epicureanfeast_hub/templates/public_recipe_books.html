@@ -1,0 +1,52 @@
+<!-- templates/public_recipe_books.html -->
+{% extends 'base.html' %}
+
+{% block title %}Public Recipe Books{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center;">Public Recipe Books</h1><br><br>
+<div style="text-align: center; display:flex; justify-content: center; align-items: center; ">
+
+
+    {% if public_books %}
+
+        {% for book in public_books %}
+            <div class="pbcard" style="margin: 10px;">
+                <p class="pbcard-title"><a href="{% url 'recipe_book_detail' recipe_book_id=book.id %}">{{ book.name }}</a></p>
+                <p class="pbcard-body">
+                    {{ book.about }}
+                </p><br>
+                <p class="pbfooter">Written by <span class="pbby-name"><a href="{% url 'user_profile' username=book.user.username %}">{{ book.user.username }}</a></span> on <span class="date">{{ book.created_at }}</span></p>
+
+
+                <!-- Add any other relevant information about the recipe book -->
+
+                {% if request.user.is_authenticated %}
+                    <form method="post" action="{% url 'like_recipe_book' recipe_book_id=book.id %}">
+                        {% csrf_token %}
+                        <button class="pbbutton">
+                            <svg height="20" width="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0H24V24H0z" fill="none"></path><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2z"></path></svg>
+                            {{ book.likes.count }}
+                        </button>
+                    </form>
+                {% endif %}
+
+            </div><br><br><br><br>
+        {% endfor %}
+
+    {% else %}
+        <p>No public recipe books available.</p>
+
+    {% endif %}
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

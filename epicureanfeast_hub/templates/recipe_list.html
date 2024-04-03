@@ -1,0 +1,153 @@
+<!-- templates/recipe_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Recipe List{% endblock %}
+
+{% block content %}
+{% load static %}
+    <table>
+        <tr>
+            <td>
+                <h1 style="color: #d49842;">Welcome to Epicurean Feast Hub!</h1>
+                <h3 style="color: #cfb390;">Explore Culinary Delights Beyond Imagination</h3>
+                <h5>Indulge your senses and embark on a culinary journey like never before with Epicurean Feast Hub.<br>
+                    Discover a world of exquisite recipes, expertly crafted by passionate food enthusiasts from around the globe.<br>
+                    Whether you're a seasoned chef or an aspiring home cook, our platform offers a plethora of culinary delights to satiate your gastronomic cravings.<br>
+                    Discover easy to make dishes with ingredients from your fridge.</h6>
+                <h6>What We Offer:</h6>
+                <ol>
+                    <li>
+                        <b style="color: #cfb390;">Recipes Galore:</b><br>
+                        Dive into our extensive collection of recipes covering a wide range of cuisines, cooking styles, and dietary preferences.<br>
+                        From quick and easy weekday meals to gourmet delights for special occasions, we've got you covered.
+                    </li>
+                    <li>
+                        <b style="color: #cfb390;">Public Recipe Books:</b><br>
+                        Explore curated recipe books created by our talented community members.<br>
+                        These collections offer a thematic approach to cooking, providing a unique and personalized culinary experience.
+                    </li>
+                    <li>
+                        <b style="color: #cfb390;">Interactive Community:</b>
+                        Connect with fellow food enthusiasts, share your culinary creations, and exchange tips and tricks.<br>
+                        Our interactive community fosters a supportive environment for learning and growing together.
+                    </li>
+                    <li>
+                        <b style="color: #cfb390;">Personalized Profiles:</b>
+                        Create your own profile, showcase your favorite recipes, and build a collection of personalized recipe books.<br>
+                        Let your culinary journey shine through a dedicated space that reflects your passion for food.
+                    </li>
+                </ol>
+            </td>
+            <td>
+                <img style="width: 300px; height: 500px;" src="https://epicureanfeasthub.pythonanywhere.com/static/fridge.png" />
+            </td>
+        </tr>
+    </table>
+
+    <!-- Add a search form -->
+    <div class="regform">
+        <!-- Single form for all filters -->
+        <form method="get" action="{% url 'recipe_list' %}">
+            <!-- Search by name or ingredient -->
+            <input class="reginput" type="text" name="q" placeholder="Search by name or ingredient..."><br><br><br>
+
+
+
+            <!-- Ingredients in your fridge - Convert to dropdown -->
+            <select class="reginput" name="ingredients" multiple>
+                <option value="" disabled selected hidden>Search by Ingredients</option>
+
+                {% for ingredient in all_ingredients %}
+                    <option value="{{ ingredient.name }}">{{ ingredient.name }}</option>
+                {% endfor %}
+            </select><br><br><br>
+
+            <!-- Cooking Time -->
+            <select class="reginput" name="time" id="time">
+                <option value="" disabled selected hidden>Search by Cooking Time</option>
+
+                <option value="15">Less than 15 mins</option>
+                <option value="30">Less than 30 mins</option>
+                <option value="60">Less than 1 hour</option>
+                <option value="180">Less than 3 hours</option>
+
+                <!-- Add more time options as needed -->
+            </select><br><br><br>
+
+            <!-- Food Type -->
+            <select class="reginput" name="food_type" id="food_type">
+                <option value="" disabled selected hidden>Search by Food Type</option>
+
+
+                <option value="desserts">Desserts</option>
+                <option value="main_courses">Main Courses</option>
+                <option value="appetizers">Appetizers</option>
+                <option value="salads">Salads</option>
+                <option value="soups">Soups</option>
+                <option value="breakfast_brunch">Breakfast/Brunch</option>
+                <option value="beverages">Beverages</option>
+                <option value="snacks">Snacks</option>
+                <option value="side_dishes">Side Dishes</option>
+                <option value="gluten_free_options">Gluten-Free Options</option>
+
+
+                <!-- Add more food type options as needed -->
+            </select><br><br><br>
+
+            <!-- Cooking Type -->
+            <select class="reginput" name="cooking_type" id="cooking_type">
+                <option value="" disabled selected hidden>Search by Cooking Type</option>
+
+                <option value="baking">Baking</option>
+                <option value="grilling">Grilling</option>
+                <option value="sauteing">Sauteing</option>
+                <option value="roasting">Roasting</option>
+                <option value="slow_cooking">Slow Cooking</option>
+                <option value="steaming">Steaming</option>
+                <option value="boiling">Boiling</option>
+                <option value="frying">Frying</option>
+                <option value="pressure_cooking">Pressure Cooking</option>
+                <option value="raw_vegan">Raw/Vegan</option>
+
+                <!-- Add more cooking type options as needed -->
+            </select><br><br><br>
+
+            <button class="regbtn" type="submit">Apply Filters</button>
+
+        </form>
+    </div>
+    <br><br>
+    <video width="100%" height="auto" autoplay loop muted style="border-radius: 10px;">
+        <source src="{% static 'fruits_and_vegetables_flying_seed4017235880841420.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+
+    <div>
+        <!-- Display the list of recipes -->
+        {% for recipe in recipes %}
+        <div class="recipe">
+            <div class="ddcard">
+                <div class="iimg">
+                    <!-- If you have an image field in the Recipe model -->
+                    {% if recipe.image %}
+                        <img style="width: 50px; height: 50px; border-radius: 10px;" src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                    {% elif recipe.image_url %}
+                        <img style="width: 50px; height: 50px; border-radius: 10px;" src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
+                    {% endif %}
+                </div>
+                <div class="ddtextBox">
+                    <div class="ddtextContent">
+                        <p class="ddh1"><a href="{% url 'recipe_detail' recipe.id %}">{{ recipe.title }}</a></p>
+                        <span class="ddspan">{{ recipe.cooking_time }} mins</span>
+                    </div>
+                    <p class="ddp">
+                        Food Type: {{ recipe.food_type }}<br>
+                        Cooking Type: {{ recipe.cooking_type }}
+                    </p>
+                <div>
+            </div></div></div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

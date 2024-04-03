@@ -1,0 +1,113 @@
+<!-- templates/user_profile.html -->
+{% extends 'base.html' %}
+
+{% block title %}{{ user.username }}'s Profile{% endblock %}
+
+{% block content %}
+
+        <div class="card">
+        <div class="card-header">
+            <div class="card-header-slanted-edge">
+            </div>
+        </div>
+
+        <div class="card-body">
+            <span class="name">{{ user.username }}</span><br>
+            <p>{{ user.bio }}</p>
+            {% if user.username == request.user.username %}
+                <span class="job-title"><u>{{ user.email }}</u></span>
+            {% endif %}
+
+            <div class="bio">
+            </div>
+
+        </div>
+
+        <div class="card-footer">
+                <div class="stats">
+                    <div class="stat">
+                        <span class="label">Followers</span>
+                        <span class="value"><a style="text-decoration: none; color: black;" href="{% url 'followers_list' %}">{{ user_profile.get_followers_count }}</a></span>
+                    </div>
+                          <div class="stat">
+                            <span class="label">Recipe Books</span>
+                            <span class="value">{{ recipe_books_count }}</span>
+                          </div>
+                          <div class="stat">
+                            <span class="label">Following</span>
+                            <span class="value">{{ user_profile.get_following_count }}</span>
+                          </div>
+                      </div>
+                </div>
+    </div>
+
+    <!-- follow -->
+    <div style="margin: auto;">
+        {% if request.user != user_profile.user %}
+            {% if request.user not in user_profile.user.followers.all %}
+              <a href="{% url 'follow_user' username=user_profile.user.username %}">Follow</a>
+            {% else %}
+              <p>Already following</p>
+            {% endif %}
+        {% endif %}
+    </div>
+
+
+
+
+    <h1 style="text-align: center;">Recipe Books</h1><br><br>
+    {% if user.recipebook_set.all %}
+        {% for book in user.recipebook_set.all %}
+            <div class="pbcard" style="margin: auto;">
+                <p class="pbcard-title"><a href="{% url 'user_recipe_books' username=user.username %}">{{ book.name }}</a></p>
+                <p class="pbfooter">Created at: <span class="pbby-name">{{ book.created_at }}</span></p>
+
+                {% if request.user.is_authenticated %}
+                    <form method="post" action="{% url 'like_recipe_book' recipe_book_id=book.id %}">
+                        {% csrf_token %}
+                        <button class="pbbutton">
+                            <svg height="20" width="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0H24V24H0z" fill="none"></path><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2z"></path></svg>
+                            {{ book.likes.count }}
+                        </button>
+                    </form>
+                {% endif %}
+            </div><br><br><br><br>
+        {% endfor %}
+    {% else %}
+
+        <p>{{ user.username }} has no public recipe books.</p>
+    {% endif %}
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+<!-- templates/view_profile.html -->
+{% extends 'base.html' %}
+
+
+    <p>Followers: {{ user.followers.count }} | Following: {{ user.following.count }}</p>
+
+    {% if user != request.user %}
+      {% if request.user in user.followers.all %}
+        <form method="post" action="{% url 'unfollow_user' username=user.username %}">
+          {% csrf_token %}
+          <button type="submit">Unfollow</button>
+        </form>
+      {% else %}
+        <form method="post" action="{% url 'follow_user' username=user.username %}">
+          {% csrf_token %}
+          <button type="submit">Follow</button>
+        </form>
+      {% endif %}
+    {% endif %}
+  </div>
+{% endblock %}

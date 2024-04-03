@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="description" content="Explore a variety of delicious recipes. Find recipes based on ingredients, cooking time, and more.">
+        <meta name="keywords" content="recipes, cooking, food, ingredients, meal, cuisine">
+        <meta name="author" content="Chibudom Obasi">
+        <meta name="copyright" content="Copyright © 2024 TechInnovom">
+
+        <!-- Replace "favicon.ico" with the path to your favicon image -->
+        <link rel="icon" href="{% static 'epicurean.ico' %}" type="image/x-icon">
+        <link rel="shortcut icon" href="{% static 'epicurean.ico' %}" type="image/x-icon">
+
+        <script src="https://kit.fontawesome.com/6aea79c0ef.js" crossorigin="anonymous"></script>
+
+        <!-- Open Graph meta tags for Facebook, Twitter, etc. -->
+        <meta property="og:title" content="Epicurean Feast Hub">
+        <meta property="og:description" content="Discover and share delicious recipes.">
+        <meta property="og:image" content="https://epicureanfeasthub.pythonanywhere.com/static/epicurean.ico">
+        <meta property="og:url" content="https://epicureanfeasthub.pythonanywhere.com/">
+        <meta name="twitter:card" content="summary_large_image">
+
+
+
+        <title>{% block title %} {% endblock %} - Epicurean Feast Hub</title>
+
+        <link rel="stylesheet" href="{% static 'nav.css' %}">
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+        <link rel="stylesheet" href="{% static 'register.css' %}">
+        <link rel="stylesheet" href="{% static 'recipe_book.css' %}">
+        <link rel="stylesheet" href="{% static 'form.css' %}">
+        <link rel="stylesheet" href="{% static 'footer.css' %}">
+
+        <!-- Add any other static files (e.g., JS files) as needed -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        {% load crispy_forms_tags %}
+
+        <!-- Add any crispy forms settings or additional tags as needed -->
+        <style>
+            .navbar-custom {
+                background-color: #EADDCA;
+            }
+        </style>
+
+        <!-- Include this in your HTML template -->
+        <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-storage.js"></script>
+
+        <script>
+            // Initialize Firebase with your configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+              apiKey: "",
+              authDomain: "",
+              projectId: "",
+              storageBucket: "",
+              messagingSenderId: "",
+              appId: "",
+              measurementId: ""
+            };
+
+          firebase.initializeApp(firebaseConfig);
+        </script>
+
+        <script>
+            function redirectToUrl() {
+                window.location.href = "http://epicureanfeasthub.pythonanywhere.com/";
+            }
+        </script>
+
+        <!-- Google tag (gtag.js) -->
+        
+
+    </head>
+    <body style="margin: auto;">
+        <!-- Your navigation, header, or other common elements go here -->
+
+        <div class="headd">
+
+            <a href="http://www.travelstart.com.ng?affId=221727" > <img width="100%" height="5%" src="{% static 'flight.gif' %}" ></a>
+
+
+            <div class="topnav" id="myTopnav">
+                <img style="width: 50px; height: 50px; object-fit: cover;" src="https://epicureanfeasthub.pythonanywhere.com/static/epicurean-removebg-preview.png" onclick="redirectToUrl()"/>
+
+
+                <div class="ff">
+                    <a href="{% url 'recipe_list' %}">Recipes</a>
+                    <a href="{% url 'public_recipe_books' %}">Public Recipe Books</a>
+                    <a href="{% url 'all_ingredients' %}">All Ingredients</a>
+
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'user_profile' username=user.username %}">Profile</a>
+                        <a href="{% url 'logout' %}">Log Out</a>
+                    {% else %}
+                        <a href="{% url 'login' %}">Login</a>
+                        <a href="{% url 'signup' %}">Sign Up</a>
+                    {% endif %}
+                    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                      <i class="fa fa-bars"></i>
+                    </a>
+
+                    <a href="{% static 'Epicurean_Feast_Hub_base.apk' %}" download>
+                        Download Android App
+                    </a>
+
+
+                    <a>
+                        <form action="https://formspree.io/f/moqgeako" method="POST">
+                            <input class="reginput" type="text" name="recipe" placeholder="suggest a recipe">
+                            <button class="regbtn" type="submit">Send</button>
+                        </form>
+                    </a>
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <script>
+            function myFunction() {
+              var x = document.getElementById("myTopnav");
+              if (x.className === "topnav") {
+                x.className += " responsive";
+              } else {
+                x.className = "topnav";
+              }
+            }
+        </script>
+
+
+        <div class="content">
+            <a href="https://truehost.com.ng/cloud/aff.php?aff=1851">
+                <img style="width:100%; height:3%;" height = "5%" src="{% static 'images.jpeg' %}" alt="Description of the image">
+            </a>
+            {% block content %}{% endblock %}
+            <a href="https://truehost.com.ng/cloud/aff.php?aff=1851">
+                <img style="width:100%; height:3%;" src="{% static 'images.jpeg' %}" alt="Description of the image">
+            </a>
+        </div>
+
+
+
+        <!-- Your footer or other common elements go here -->
+        <footer class="footer-section">
+        <div class="container">
+            <div class="footer-content pt-5 pb-5">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 mb-50">
+                        <div class="footer-widget">
+                            <div class="footer-logo">
+                                <a href="{% url 'recipe_list' %}"><img src="{% static 'epicurean-removebg-preview.png' %}" class="img-fluid" alt="logo"></a>
+                            </div>
+
+                            <div class="footer-social-icon">
+                                <span>Follow us</span>
+                                <a href="https://www.tiktok.com/@onevoiceodysseypodcast"><i class="fab fa-brands fa-tiktok"></i></a>
+                                <a href="https://instagram.com/_._praiz"><i class="fab fa-brands fa-instagram"></i></a>
+                                <a href="https://www.youtube.com/c/Chibudomobasi?app=desktop&sub_confirmation=1"><i class="fab fa-brands fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
+                        <div class="footer-widget">
+                            <div class="footer-widget-heading">
+                                <h3>Contact Us</h3>
+                            </div>
+                            <div class="footer-text mb-25">
+                                <p>Get in touch with your complain or feedback.</p>
+                            </div>
+                            <div class="subscribe-form">
+                                <form action="https://formspree.io/f/xvoegegb" method="POST">
+                                    <textarea style="width: 100%; height: 100px; padding: 12px 20px; box-sizing: border-box; border: 2px solid #ccc; border-radius: 4px; background-color: #f8f8f8; font-size: 16px; resize: none;" name="message" placeholder="Enter Your Message Here"></textarea>
+
+                                    <button type="submit"><i class="fab fa-telegram-plane"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 text-center text-lg-left">
+                        <div class="copyright-text">
+                            <p>Copyright &copy; Epicurean Feast Hub 2024, All Right Reserved <a href="https://techinnovom.framer.ai/">TechInnovom</a></p>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
+                        <div class="footer-menu">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    </body>
+</html>

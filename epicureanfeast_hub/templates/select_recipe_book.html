@@ -1,0 +1,30 @@
+<!-- templates/select_recipe_book.html -->
+{% extends 'base.html' %}
+
+{% block title %}Select Recipe Book{% endblock %}
+
+{% block content %}
+    <h2>Select or Create Recipe Book</h2>
+
+    <!-- Form to select an existing recipe book -->
+    <form method="post">
+      {% csrf_token %}
+      <label for="recipe_book">Select Recipe Book:</label>
+      <select name="recipe_book" id="recipe_book">
+        {% for recipe_book in user_recipe_books %}
+          <option value="{{ recipe_book.id }}">{{ recipe_book.name }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Add to Recipe Book</button>
+    </form>
+    <hr>
+
+    <!-- Form to create a new recipe book -->
+    <h3>Create a New Recipe Book</h3>
+    <form method="post" action="{% url 'create_recipe_book' %}?next={{ request.path }}">
+      {% csrf_token %}
+      <label for="new_recipe_book">New Recipe Book Name:</label>
+      <input type="text" name="new_recipe_book" id="new_recipe_book" required>
+      <button type="submit">Create Recipe Book</button>
+    </form>
+{% endblock %}
