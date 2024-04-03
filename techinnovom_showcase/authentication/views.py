@@ -28,14 +28,14 @@ from django.conf import settings
 
 
 config = {
-    "apiKey": "AIzaSyC_QcKwkwaFiIxdVBlY8EDidpWGlLndnW8",
-    "authDomain": "techinnovom-showcase.firebaseapp.com",
-    "databaseURL": "https://techinnovom-showcase-default-rtdb.firebaseio.com",
-    "projectId": "techinnovom-showcase",
-    "storageBucket": "techinnovom-showcase.appspot.com",
-    "messagingSenderId": "685028861115",
-    "appId": "1:685028861115:web:5cd16b660adccb66e7759e",
-    "measurementId": "G-1WN04EPE2M"
+    "apiKey": "",
+    "authDomain": "",
+    "databaseURL": "",
+    "projectId": "",
+    "storageBucket": "",
+    "messagingSenderId": "",
+    "appId": "",
+    "measurementId": ""
 }
 
 firebase = pyrebase.initialize_app(config)
@@ -215,7 +215,7 @@ def edit_product(request, product_key):
 
 
 
-        userr = authe.sign_in_with_email_and_password("bw43269@gmail.com", "Thepass@1")
+        userr = authe.sign_in_with_email_and_password("", "")
 
         # Get the authentication token
         id_token = userr['idToken']
@@ -280,7 +280,7 @@ def host_buisness(request):
         logo_path = f'logo/{user.username}/{logo.name}'
         storage.child(logo_path).put(logo)
 
-        userr = authe.sign_in_with_email_and_password("bw43269@gmail.com", "Thepass@1")
+        userr = authe.sign_in_with_email_and_password("", "")
 
         # Get the authentication token
         id_token = userr['idToken']
@@ -481,7 +481,7 @@ def product_listing(request):
 
 
 
-        userr = authe.sign_in_with_email_and_password("bw43269@gmail.com", "Thepass@1")
+        userr = authe.sign_in_with_email_and_password("", "")
 
         # Get the authentication token
         id_token = userr['idToken']

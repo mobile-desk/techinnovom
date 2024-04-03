@@ -19,7 +19,7 @@ Payment
 
     <form method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay">
         {% csrf_token %}
-        <input type="hidden" name="public_key" value="FLWPUBK-0931877fce31c4559c69e72ba49c553c-X" />
+        <input type="hidden" name="public_key" value="" />
 
         <!-- Unique transaction reference based on the selected plan -->
         <input type="hidden" name="tx_ref" value="{{ tx_ref }}" />
